@@ -8,7 +8,7 @@ import { Logo } from '../../../../components/Logo'
 import { PatreonLink } from '../../../../components/PatreonLink'
 
 import headerBackdropImage from './header-backdrop.png'
-import headerBackdropVideo from './header.webm'
+// import headerBackdropVideo from './header.webm'
 import {
   buttons,
   header,
