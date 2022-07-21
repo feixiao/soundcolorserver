@@ -20,6 +20,7 @@ export const SoundDetails: React.FunctionComponent<SoundDetailsProps> = function
   } = props
   const { analysis } = useStores()
 
+  // 显示Sound Detail
   const renderDetails = (info?: ToneInfo) => {
     const noiseVolume = info && analysis.noise ? `${analysis.noise.toFixed(2)} dB` : '•'
     const toneVolume = info ? `${info.dB.toFixed(0)} dB` : '•'
