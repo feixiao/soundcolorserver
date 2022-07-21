@@ -185,11 +185,18 @@ export interface Analysis {
   fft: Float32Array
 }
 
+// 获取分析需要的音频数据
 export function getAnalysis (): Analysis {
+
+  // analyser.getFloatFrequencyData
   const fft = getFft()
+
+  // stats计算原理待分析
   const stats = getStats(fft)
+
   const mindB = stats.dB.mean + stats.dB.deviation * patternsStore.toneSigma
   const strongest = getStrongestValues(fft, mindB)
+  
   const tones = getTones(strongest)
   const tonalVolume = tones.reduce((total, { dB }) => total + dBtoVolume(dB), 0)
   const noiseVolume = stats.volume.mean - (tonalVolume / stats.counted)

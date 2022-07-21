@@ -49,6 +49,7 @@ reaction(
   async (show) => {
     if (show) {
       await startAudio()
+      // 启动分析器
       analysisStore.startAnalysis()
       if (navigator.wakeLock?.request) {
         navigator.wakeLock.request('screen').then(wakeLock => {

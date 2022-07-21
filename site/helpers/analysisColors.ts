@@ -55,7 +55,10 @@ function fillTones (tones: ToneInfo[]): ToneInfo[] {
 }
 
 let lastTime = Date.now()
+
+// 声音转换为颜色
 export function getColorsFromAnalysis (
+  // 关联analysisStore， 数据修改的时候自己会有通知
   analysis = analysisStore,
   patterns = patternsStore,
 ): HSVa[] {

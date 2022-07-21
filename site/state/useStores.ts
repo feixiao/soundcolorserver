@@ -19,6 +19,7 @@ export type MobxStoresProps =
   & RoutingProp
 
 const stores: MobxStoresProps = Object.freeze({
+  // 关联analysisStore， 数据修改的时候自己会有通知
   analysis: analysisStore,
   apiStatus: apiStatusStore,
   intro: introStore,
