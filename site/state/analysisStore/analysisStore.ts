@@ -43,6 +43,7 @@ export class AnalysisStore implements Analysis {
     }
     this.setAnalysis(getAnalysis(), getMiniFft())
     // window.requestAnimationFrame() 告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画
+    // requestAnimationFrame 每16.7m调用一次
     this._animationFrame = requestAnimationFrame(this._requestAnalysis)
   }
 }
