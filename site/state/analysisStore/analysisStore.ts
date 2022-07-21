@@ -19,8 +19,8 @@ export class AnalysisStore implements Analysis {
 
   @action
   setAnalysis ({ noise, tones, fft }: Analysis, miniFft: Float32Array) {
-    this.noise = noise
-    this.tones = tones
+    this.noise = noise    // 噪声
+    this.tones = tones    // 音调
     this.fft = fft
     this.miniFft = miniFft
   }
@@ -42,6 +42,7 @@ export class AnalysisStore implements Analysis {
       return
     }
     this.setAnalysis(getAnalysis(), getMiniFft())
+    // window.requestAnimationFrame() 告诉浏览器——你希望执行一个动画，并且要求浏览器在下次重绘之前调用指定的回调函数更新动画
     this._animationFrame = requestAnimationFrame(this._requestAnalysis)
   }
 }

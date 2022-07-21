@@ -17,6 +17,9 @@ export async function getAnalyser () {
       const source = prevSource || await getAudioSource()
       prevSource = source
 
+      // https://developer.mozilla.org/zh-CN/docs/Web/API/BaseAudioContext/createAnalyser
+      // 能创建一个AnalyserNode，可以用来获取音频时间和频率数据，以及实现数据可视化。
+      // https://mdn.github.io/voice-change-o-matic/
       analyser = getContext().createAnalyser()
       analyser.fftSize = fftSize
       analyser.smoothingTimeConstant = patternsStore.timeSmoothing
