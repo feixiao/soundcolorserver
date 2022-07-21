@@ -49,6 +49,7 @@ const connectionsRoute = () => (
   <ConnectionsPanel />
 )
 
+// 声音详细信息标签
 const soundDetails = () => (
   <SoundDetails />
 )
@@ -57,6 +58,7 @@ const optionsRoute = () => (
   <OptionsPanel />
 )
 
+// 颜色模式选择器
 const paletteRoute = () => (
   <PatternSelector />
 )

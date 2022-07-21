@@ -6,6 +6,9 @@ let context: AudioContext | null = null
 
 export function getContext () {
   if (!context) {
+    // balanced 平衡音频输出延迟和资源消耗
+    // inteactive 默认值 提供最小的音频输出延迟最好没有干扰
+    // playback 对比音频输出延迟，优先重放不被中断
     context = new AudioContext({
       latencyHint: 'playback',
     })

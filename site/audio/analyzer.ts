@@ -20,10 +20,16 @@ export async function getAnalyser () {
       // https://developer.mozilla.org/zh-CN/docs/Web/API/BaseAudioContext/createAnalyser
       // 能创建一个AnalyserNode，可以用来获取音频时间和频率数据，以及实现数据可视化。
       // https://mdn.github.io/voice-change-o-matic/
+
+      // fftSize： fft是快速傅里叶变换，fftSize就是样本的窗口大小。 fftSize的值必须是32-32768范围内的2的非零幂
       analyser = getContext().createAnalyser()
       analyser.fftSize = fftSize
+
+      // smoothingTimeConstant 属性的默认值为 0.8; 值的范围必须在 0 ~ 1 之间。
+      // 如果设置为 0，则不进行平均，而值为 1 意味着 "在计算值时重叠上一个缓冲区和当前缓冲区相当多", 它基本上平滑了 AnalyserNode.getFloatFrequencyData/AnalyserNode.getByteFrequencyData 调用的变化
       analyser.smoothingTimeConstant = patternsStore.timeSmoothing
 
+      // frequencyBinCount 的值固定为 AnalyserNode 接口中 fftSize 值的一半。该属性通常用于可视化的数据值的数量。
       fftArray = new Float32Array(analyser.frequencyBinCount)
 
       source.connect(analyser)
