@@ -19,6 +19,7 @@ export const AudioSourceSelector: React.FunctionComponent<AudioSourceSelectorPro
   } = props
   const { media, routing } = useStores()
 
+  // 获取音频设备
   const handleClick = (deviceId: string) => () => {
     media.currentDeviceId = deviceId
     routing.popSubroute()

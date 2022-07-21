@@ -21,6 +21,7 @@ To get the application running in development mode, simply:
 ```bash
 npm i # installs the dependencies
 npm run dev # runs the app in development mode
+# http://localhost:9000/  install app use chrome
 ```
 
 When running in development mode:
