@@ -73,7 +73,9 @@ export function getColorsFromAnalysis (
     minimumBrightness,
   } = patterns
 
+  // 模式对应的颜色表
   const colorMap = patternData[currentPattern].colors
+
   noiseMultiplier = noiseMultiplier > 0 ? 2 ** noiseMultiplier : 0
   vibranceMultiplier = 2 ** vibranceMultiplier
   const saturationMult = Math.max(0, Math.min(1 - (dBtoVolume(noise) * noiseMultiplier), 1))
