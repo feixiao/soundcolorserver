@@ -27,6 +27,7 @@ export const SoundDetails: React.FunctionComponent<SoundDetailsProps> = function
     const noiseVolume = info && analysis.noise ? `${analysis.noise.toFixed(2)} dB` : '•'
     const toneVolume = info ? `${info.dB.toFixed(0)} dB` : '•'
     const frequency = info ? `${info.frequency.toFixed(2)} hz` : '•'
+    
     const note = info ? `${info.note.note} ${info.note.octave}` : '•'
     const cents = info ? `${info.note.cents.toFixed(2)}` : '•'
 

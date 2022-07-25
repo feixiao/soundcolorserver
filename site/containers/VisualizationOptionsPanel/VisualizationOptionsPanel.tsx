@@ -30,6 +30,7 @@ export const VisualizationOptionsPanel: React.FunctionComponent<VisualizationOpt
     const { label, defaultValue, min, max, step, displayMapper } = info.sliders![name]
     let { [name]: currentValue = defaultValue } = shaderSliders
 
+    // 显示配置
     return (
       <Slider
         key={name}

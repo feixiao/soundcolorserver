@@ -45,6 +45,7 @@ const actionsPanel = () => (
   <ActionsPanel />
 )
 
+// 音频输入信息
 const connectionsRoute = () => (
   <ConnectionsPanel />
 )
@@ -144,6 +145,7 @@ const introPanes = () => (
   </>
 )
 
+// 获取子页面
 function getPanelChild (routing: RoutingStore) {
   if (routing.subRoutes.length > 0) {
     switch (routing.subRoutes[0]) {
