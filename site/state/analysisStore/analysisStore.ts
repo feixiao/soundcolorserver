@@ -19,6 +19,8 @@ export class AnalysisStore implements Analysis {
 
   @action
   setAnalysis ({ noise, tones, fft }: Analysis, miniFft: Float32Array) {
+
+    // observable 在哪了引起action
     this.noise = noise    // 噪声
     this.tones = tones    // 音调
     this.fft = fft
