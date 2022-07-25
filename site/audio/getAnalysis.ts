@@ -22,16 +22,22 @@ const DEFAULT_STATS = {
 }
 
 function getStats (fft: Float32Array) {
+  // reduce() 方法接受一个函数作为参数，这个函数作为一个累加器，从左到右遍历整个类型数组，最后返回一个单一的值
+  // curr为数组当前的值
+  // val必需。初始值({ total: 0, count: 0 }), 或者计算结束后的返回值。
   const meanStats = fft.reduce((val, curr) => {
+    // 逻辑理解为去掉小于MIN_FOR_STATS(-100的数据)
     if (curr > MIN_FOR_STATS) {
       val.total += curr
       val.count++
     }
     return val
   }, { total: 0, count: 0 })
+
   if (meanStats.count === 0) {
     return DEFAULT_STATS
   }
+  
   const meandB = meanStats.total / meanStats.count
 
   const varianceStats = fft.reduce((val, curr) => {
