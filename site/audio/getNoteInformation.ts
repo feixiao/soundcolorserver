@@ -13,6 +13,8 @@ export function getNoteInformation (frequency: number): NoteInfo {
   if (noteVal < 0) {
     noteVal += 12 * Math.floor((noteVal / -12) + 1)
   }
+
+  // Math.round() 函數回傳四捨五入後的近似值.
   const noteNumber = Math.round(noteVal)
   const cents = (noteVal - noteNumber) * 100
   const note = NOTES[(noteNumber + 12) % 12]

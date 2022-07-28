@@ -79,6 +79,10 @@ export interface ToneInfo {
 
 function getStrongestValues (fft: Float32Array, minToCount: number) {
   const strongest: ToneStrength[] = []
+
+  // value和idx 参数哪里来 ？
+  // value为当前的值，idex是索引
+  // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypedArray/forEach
   function addIfHigher (value: number, idx: number) {
     const previous = fft[idx - 1] || -Infinity
     const next = fft[idx + 1] || -Infinity
@@ -136,26 +140,13 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
       harmonics: 1,
       note: getNoteInformation(frequency),
     }
-  })
+  }) // end of map opt
 
   logger.info('getTones all tones', tones)
 
-  // const notes = tones.map(({ note: { note } }) => note)
-  //   .filter((note, idx, notes) => (
-  //     !notes.slice(0, idx - 1).includes(note)
-  //   ))
-  // tones = notes.map(ownNote => {
-  //   const ownTones = tones.filter(({ note: { note } }) => note === ownNote)
-  //   // const volume = ownTones.map(({ dB }) => dBtoVolume(dB)).reduce((total, v) => total + v)
-  //   const dB = tones.reduce((max, { dB }) => Math.max(max, dB), MIN_FOR_STATS)
-  //   return {
-  //     ...ownTones[0],
-  //     // dB: volumeTodB(volume),
-  //     dB,
-  //   }
-  // })
-  // .slice(0, MAX_TONES)
-
+  // 过滤数据
+  // slice() 方法會回傳一個新陣列物件，為原陣列選擇之 begin 至 end（不含 end）部分的淺拷貝（shallow copy）。
+  // dB note 参数哪里来？
   tones = tones.filter(({ dB, note: { note } }, ownIdx) => (
     !tones.slice(0, ownIdx).some((data) => {
       if (data.note.note === note) {
@@ -168,6 +159,7 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
       }
     })
   )).slice(0, MAX_TONES)
+
 
   return tones
 }

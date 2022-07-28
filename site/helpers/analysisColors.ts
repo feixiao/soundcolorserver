@@ -82,6 +82,8 @@ export function getColorsFromAnalysis (
   const newTime = Date.now()
   const delta = (newTime - lastTime) / 1000
   lastTime = newTime
+
+  // ??? note ???
   return fillTones(tones).map(({ dB, note: { note } }, idx) => {
     const smooth = getSmoothers()[idx]
     const valueMult = Math.max(0, Math.min(dBtoVolume(dB) * vibranceMultiplier, 1))
