@@ -72,7 +72,7 @@ interface ToneStrength {
 
 export interface ToneInfo {
   dB: number
-  frequency: number
+  // frequency: number
   harmonics: number
   note: NoteInfo
 }
@@ -162,7 +162,7 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
         return false
       }
     }) // end of some
-  )    // end of slice
+  )    // end of
 
   ) // end of filter
   
