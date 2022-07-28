@@ -146,8 +146,12 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
 
   // 过滤数据
   // slice() 方法會回傳一個新陣列物件，為原陣列選擇之 begin 至 end（不含 end）部分的淺拷貝（shallow copy）。
-  // dB note 参数哪里来？
+  // some() 方法會透過給定函式、測試陣列中是否至少有一個元素，通過該函式所實作的測試。
   tones = tones.filter(({ dB, note: { note } }, ownIdx) => (
+    // [0,ownIdx) 找是否有跟ownIdx相同的note
+    // ! ?作用？ 
+
+    // 待分析
     !tones.slice(0, ownIdx).some((data) => {
       if (data.note.note === note) {
         data.harmonics++
@@ -157,8 +161,12 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
       } else {
         return false
       }
-    })
-  )).slice(0, MAX_TONES)
+    }) // end of some
+  )    // end of slice
+
+  ) // end of filter
+  
+  tones = tones.slice(0, MAX_TONES)
 
 
   return tones
