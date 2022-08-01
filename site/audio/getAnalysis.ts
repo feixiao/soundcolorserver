@@ -72,7 +72,7 @@ interface ToneStrength {
 
 export interface ToneInfo {
   dB: number
-  // frequency: number
+  frequency: number
   harmonics: number
   note: NoteInfo
 }
@@ -197,13 +197,17 @@ export function getAnalysis (): Analysis {
   // analyser.getFloatFrequencyData
   const fft = getFft()
 
+
   // stats计算原理待分析
   const stats = getStats(fft)
+
+  console.log(stats)
 
   const mindB = stats.dB.mean + stats.dB.deviation * patternsStore.toneSigma
   const strongest = getStrongestValues(fft, mindB)
   
   const tones = getTones(strongest)
+  // 用reduce做了db累加
   const tonalVolume = tones.reduce((total, { dB }) => total + dBtoVolume(dB), 0)
   const noiseVolume = stats.volume.mean - (tonalVolume / stats.counted)
   const noise = volumeTodB(noiseVolume)

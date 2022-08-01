@@ -1,5 +1,6 @@
 
 import { dBtoVolume, MAX_TONES, ToneInfo } from '../audio/getAnalysis'
+import ConnectionsPanelStories from '../containers/ConnectionsPanel/ConnectionsPanel.stories'
 import { greyScale } from '../pcss-functions/getLuminance'
 import { HSVa, toHsv } from '../pcss-functions/toHsv'
 import { RGBa, toRgb } from '../pcss-functions/toRgb'
@@ -14,6 +15,7 @@ interface SmoothValues {
   b: number
 }
 
+// Smoother 类似函数指针
 interface Smoother {
   (color: RGBa | HSVa, key: keyof SmoothValues, delta: number, speed: number): number
 }
@@ -95,6 +97,7 @@ export function getColorsFromAnalysis (
     hsv.s = (1 - minimumBrightness) * hsv.s
     hsv.v = 1 - ((1 - minimumBrightness) * (1 - hsv.v))
 
+    // RGBA和HSVA互转
     const rgb = toRgb(hsv)
     const { h } = toHsv(new RGBa(
       smooth(rgb, 'r', delta, transitionSpeed),
@@ -102,6 +105,10 @@ export function getColorsFromAnalysis (
       smooth(rgb, 'b', delta, transitionSpeed),
     ))
 
+    console.log("[frank] start")
+    console.log(hsv) 
+    console.log(rgb) 
+    console.log("[frank] stop");
     const hsva = new HSVa(
       h,
       smooth(hsv, 's', delta, transitionSpeed),
