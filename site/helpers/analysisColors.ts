@@ -105,10 +105,11 @@ export function getColorsFromAnalysis (
       smooth(rgb, 'b', delta, transitionSpeed),
     ))
 
-    console.log("[frank] start")
-    console.log(hsv) 
-    console.log(rgb) 
-    console.log("[frank] stop");
+    console.log("[frank] hsv start")
+    console.log(hsv.toString()) 
+    console.log("[frank] rgb start")
+    console.log(rgb.toString()) 
+    console.log("[frank] color stop");
     const hsva = new HSVa(
       h,
       smooth(hsv, 's', delta, transitionSpeed),

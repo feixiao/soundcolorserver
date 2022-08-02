@@ -1,4 +1,5 @@
 
+import { info } from 'console'
 import { logger } from '../../shared/logger'
 import { patternsStore } from '../state/patternsStore'
 
@@ -109,8 +110,10 @@ function getStrongestValues (fft: Float32Array, minToCount: number) {
       if (insertionIndex === -1 && strongest.length < MAX_STRENGTHS) {
         strongest.push(obj)
       } else if (insertionIndex >= 0) {
+        // 在insertionIndex的位置插入obj，其他的往后移
         strongest.splice(insertionIndex, 0, obj)
         if (strongest.length > MAX_STRENGTHS) {
+          // 删除最后一个
           strongest.splice(MAX_STRENGTHS, 1)
         }
       }
@@ -119,6 +122,7 @@ function getStrongestValues (fft: Float32Array, minToCount: number) {
 
   fft.forEach(addIfHigher)
 
+  logger.info(getContext().sampleRate)
   logger.info('getStrongestValues output', strongest.map(({ idx, value }) => {
     const frequency = idx * (getContext().sampleRate) / fftSize
     return {
@@ -197,20 +201,37 @@ export function getAnalysis (): Analysis {
   // analyser.getFloatFrequencyData
   const fft = getFft()
 
+  logger.info("[frank]  fft start")
+  logger.info(fft.toString());
+  logger.info("[frank]  fft stop")
 
   // stats计算原理待分析
   const stats = getStats(fft)
 
-  console.log(stats)
+  logger.info("[frank] stats start")
+  logger.info(JSON.stringify(stats));
+  logger.info("[frank] stats stop")
 
   const mindB = stats.dB.mean + stats.dB.deviation * patternsStore.toneSigma
+
+  logger.info("[frank] strongest start")
+  logger.info(JSON.stringify(patternsStore));
   const strongest = getStrongestValues(fft, mindB)
-  
+  logger.info(JSON.stringify(strongest))
+  logger.info("[frank] strongest stop")
+
+  logger.info("[frank] tones start")
   const tones = getTones(strongest)
+  logger.info(JSON.stringify(tones))
+  logger.info("[frank] tones stop")
+
   // 用reduce做了db累加
   const tonalVolume = tones.reduce((total, { dB }) => total + dBtoVolume(dB), 0)
   const noiseVolume = stats.volume.mean - (tonalVolume / stats.counted)
   const noise = volumeTodB(noiseVolume)
+
+  logger.info(tonalVolume, noiseVolume, noise)
+  
 
   return {
     noise,

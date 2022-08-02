@@ -59,6 +59,7 @@ export function getFft () {
 
   // 此数组表示的频率范围为 0 ~ 22050 Hz，每个元素表示对应频率上的信号分量强度，单位为分贝。
   analyser.getFloatFrequencyData(fftArray)
-  logger.info('fft', analyser.frequencyBinCount, fftSize)
+  logger.info('frank fft', analyser.frequencyBinCount, fftSize)
+  logger.info(fftArray)
   return fftArray
 }
