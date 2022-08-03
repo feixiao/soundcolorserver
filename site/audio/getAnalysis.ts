@@ -138,6 +138,7 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
   let tones = strengths.map(({ value, idx }) => {
     const frequency = idx * (getContext().sampleRate) / fftSize
 
+    // logger.info(idx, frequency,fftSize, getContext().sampleRate)
     return {
       dB: value,
       frequency: frequency,
@@ -146,7 +147,10 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
     }
   }) // end of map opt
 
-  logger.info('getTones all tones', tones)
+
+  logger.info('frank tones internal start')
+  logger.info(JSON.stringify(tones));
+  logger.info('frank tones internal stop')
 
   // 过滤数据
   // slice() 方法會回傳一個新陣列物件，為原陣列選擇之 begin 至 end（不含 end）部分的淺拷貝（shallow copy）。
@@ -155,12 +159,12 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
     // [0,ownIdx) 找是否有跟ownIdx相同的note
     // ! ?作用？ 
 
-    // 待分析
+    // 待分析[0，ownIdx)是否有符合规则的
     !tones.slice(0, ownIdx).some((data) => {
       if (data.note.note === note) {
         data.harmonics++
         const volume = dBtoVolume(data.dB) + dBtoVolume(dB)
-        data.dB = Math.log2(volume) * 10
+        data.dB = Math.log2(volume) * 10 // 修改了dB数据， 所以上面和下面的不一样了
         return true
       } else {
         return false
@@ -170,8 +174,15 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
 
   ) // end of filter
   
+  logger.info('frank tones slice start')
+  logger.info(JSON.stringify(tones));
+
+  logger.info('frank tones slice *****************************')
+  // 截取[0, MAX_TONES)
   tones = tones.slice(0, MAX_TONES)
 
+  logger.info(JSON.stringify(tones));
+  logger.info('frank tones slice stop')
 
   return tones
 }
