@@ -159,8 +159,13 @@ function getTones (strengths: ToneStrength[]): ToneInfo[] {
     // [0,ownIdx) 找是否有跟ownIdx相同的note
     // ! ?作用？ 
 
+    // dB和 note 需要第一个for循环
+
+
     // 待分析[0，ownIdx)是否有符合规则的
+    // tones.slice返回null的时候，这个owdIdx才是符合要求的
     !tones.slice(0, ownIdx).some((data) => {
+      // data 属于第二个循环
       if (data.note.note === note) {
         data.harmonics++
         const volume = dBtoVolume(data.dB) + dBtoVolume(dB)

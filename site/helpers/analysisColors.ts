@@ -30,7 +30,11 @@ function makeSmoother (): Smoother {
   }
   return function smooth (color, key, delta, speed) {
     const smoothingVal = (1 - speed) ** (delta)
-    return values[key] = values[key] * smoothingVal + (color as any)[key] * (1 - smoothingVal)
+    let tmp =  values[key] * smoothingVal + (color as any)[key] * (1 - smoothingVal);
+    values[key] = tmp
+    console.log(" soomther values ", values)
+    console.log(" soomther ", color, key, delta, speed)
+    return tmp
   }
 }
 
@@ -75,6 +79,8 @@ export function getColorsFromAnalysis (
     minimumBrightness,
   } = patterns
 
+
+  console.log("getColorsFromAnalysis start ...")
   // 模式对应的颜色表
   const colorMap = patternData[currentPattern].colors
 
@@ -84,37 +90,63 @@ export function getColorsFromAnalysis (
   const newTime = Date.now()
   const delta = (newTime - lastTime) / 1000
   lastTime = newTime
+  console.log(noiseMultiplier, vibranceMultiplier, noise)
+  console.log("getColorsFromAnalysis stop ...")
 
   // ??? note ???
   return fillTones(tones).map(({ dB, note: { note } }, idx) => {
+
+    console.log("fillTones start ......");
     const smooth = getSmoothers()[idx]
     const valueMult = Math.max(0, Math.min(dBtoVolume(dB) * vibranceMultiplier, 1))
+    console.log(idx, valueMult, dB, delta, transitionSpeed);
+    console.log("fillTones stop  ......");
+
     const hsv = colorMap[note].clone()
 
+    console.log("frank hsv old ......");
+    console.log(JSON.stringify(hsv)) 
     hsv.s *= saturationMult
     hsv.v *= valueMult
 
     hsv.s = (1 - minimumBrightness) * hsv.s
     hsv.v = 1 - ((1 - minimumBrightness) * (1 - hsv.v))
 
+    console.log(JSON.stringify(hsv)) 
+    console.log("frank hsv new ......");
+
     // RGBA和HSVA互转
+    // RGBa
     const rgb = toRgb(hsv)
-    const { h } = toHsv(new RGBa(
+
+    console.log("[frank] toRgb")
+    console.log(JSON.stringify(rgb)) 
+    console.log("[frank] toRgb")
+
+
+    let rgba = new RGBa(
       smooth(rgb, 'r', delta, transitionSpeed),
       smooth(rgb, 'g', delta, transitionSpeed),
       smooth(rgb, 'b', delta, transitionSpeed),
-    ))
+    )
 
-    console.log("[frank] hsv start")
-    console.log(hsv.toString()) 
-    console.log("[frank] rgb start")
-    console.log(rgb.toString()) 
-    console.log("[frank] color stop");
+    console.log("[frank] smooth rgba")
+    console.log(JSON.stringify(rgba)) 
+    console.log("[frank] smooth rgba")
+
+    const { h } = toHsv(rgba)
+    console.log(JSON.stringify(hsv)) 
+    console.log("[frank] toHsv")
+
     const hsva = new HSVa(
       h,
       smooth(hsv, 's', delta, transitionSpeed),
       smooth(hsv, 'v', delta, transitionSpeed),
     )
+
+    console.log("[frank] hsva ......")
+    console.log(JSON.stringify(hsva)) 
+    console.log("[frank] hsva ......")
 
     if (monochrome) {
       // const luminance = getLuminance(hsva)

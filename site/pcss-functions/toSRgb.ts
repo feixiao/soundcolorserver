@@ -83,6 +83,8 @@ export class SRGBa {
     return toSRgb(new RGBa(...this.toArray()))
   }
 
+
+  // RGBa => SRGBa
   static fromRgb (orig: RGBa) {
     if (orig.type !== 'RGBa') {
       throw new Error('input to fromRgb must be of type Rgba')

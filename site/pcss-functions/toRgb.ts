@@ -55,6 +55,7 @@ export class RGBa {
       throw new Error('input to fromSRgb must be of type Srgba')
     }
 
+    // ?????
     return new RGBa(...orig.map(c => {
       if (c <= colorConversion.sRgbCutoff) {
         return c / colorConversion.lowRatio
