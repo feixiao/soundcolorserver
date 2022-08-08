@@ -7,7 +7,7 @@ import { fftSize, getFft } from './analyzer'
 import { getContext } from './context'
 import { getNoteInformation, NoteInfo } from './getNoteInformation'
 
-export const MIN_FOR_STATS = -100
+export const MIN_FOR_STATS = 0 // -100
 export const MAX_TONES = 5
 const MAX_STRENGTHS = MAX_TONES * 10
 const DEFAULT_STATS = {

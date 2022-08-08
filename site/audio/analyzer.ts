@@ -24,8 +24,11 @@ export async function getAnalyser () {
       // fftSize： fft是快速傅里叶变换，fftSize就是样本的窗口大小。 fftSize的值必须是32-32768范围内的2的非零幂
       analyser = getContext().createAnalyser()
       analyser.fftSize = fftSize
-      analyser.mindecibels = -140
-      analyser.maxDecibels = 0
+
+      // Min and max decibels only affect the getByteFrequencyData values, not the getFloatFrequencyData values.
+      //  "The minimum/maximum power value in the scaling range for the FFT analysis data for conversion to unsigned byte values."
+      // analyser.minDecibels = -100
+      // analyser.maxDecibels = 0
       // smoothingTimeConstant 属性的默认值为 0.8; 值的范围必须在 0 ~ 1 之间。
       // 如果设置为 0，则不进行平均，而值为 1 意味着 "在计算值时重叠上一个缓冲区和当前缓冲区相当多", 它基本上平滑了 AnalyserNode.getFloatFrequencyData/AnalyserNode.getByteFrequencyData 调用的变化
       analyser.smoothingTimeConstant = patternsStore.timeSmoothing
