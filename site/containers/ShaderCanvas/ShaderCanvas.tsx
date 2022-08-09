@@ -104,7 +104,16 @@ const setUniforms = ({ gl, canvas, shader, startTime, colors }: UniformsOpts) =>
   shader.uniforms.u_color5(GL_BLACK)
 
   if (colors.length) {
-    const colorArrays = colors.map(c => toRgb(c).toArray())
+    const colorArrays = colors.map(c => {
+      console.log("frank colorArrays start ...")
+      let color = toRgb(c)
+      console.log(JSON.stringify(c))
+      console.log(JSON.stringify(color))
+      console.log(color.toString())
+      console.log("frank colorArrays stop ...")
+      return color.toArray()
+    })
+
     shader.uniforms.u_color1(colorArrays[0])
     shader.uniforms.u_color2(colorArrays[1] || colorArrays[0])
     shader.uniforms.u_color3(colorArrays[2] || colorArrays[0])

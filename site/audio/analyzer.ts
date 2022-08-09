@@ -5,7 +5,8 @@ import { patternsStore } from '../state/patternsStore'
 import { getContext } from './context'
 import { getAudioSource } from './microphoneSource'
 
-export const fftSize = 32768 // maximum size allowed
+// export const fftSize = 32768 // maximum size allowed
+export const fftSize = 512 // maximum size allowed
 let analyser: AnalyserNode
 let fftArray: Float32Array
 let analyserPromise: Promise<AnalyserNode>

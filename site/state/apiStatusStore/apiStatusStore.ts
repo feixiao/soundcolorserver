@@ -183,24 +183,24 @@ export class ApiStatusStore {
         ? 1000
         : 250
       const startTime = Date.now()
-      this._transmitter = setInterval(() => {
-        if (!patternsStore.currentPattern || !renderStateStore.showColors) {
-          return
-        }
-        const [hsv] = getColorsFromAnalysis()
-        const color = hsv
-          ? { h: hsv.h, s: hsv.s, v: hsv.v }
-          : { h: 0, s: 0, v: 0 }
+      // this._transmitter = setInterval(() => {
+      //   if (!patternsStore.currentPattern || !renderStateStore.showColors) {
+      //     return
+      //   }
+      //   const [hsv] = getColorsFromAnalysis()
+      //   const color = hsv
+      //     ? { h: hsv.h, s: hsv.s, v: hsv.v }
+      //     : { h: 0, s: 0, v: 0 }
 
-        logger.info(`Setting color (${Date.now() - startTime})`)
-        setColor({ groupId, color, mode }).catch(e => {
-          logger.info('Failed to set group color:', e)
-          gtag('event', 'exception', {
-            description: 'Failed to set hue light group color: ' + errorString(e),
-            event_label: 'hue light group set color exception',
-          })
-        })
-      }, rate)
+      //   logger.info(`Setting color (${Date.now() - startTime})`)
+      //   setColor({ groupId, color, mode }).catch(e => {
+      //     logger.info('Failed to set group color:', e)
+      //     gtag('event', 'exception', {
+      //       description: 'Failed to set hue light group color: ' + errorString(e),
+      //       event_label: 'hue light group set color exception',
+      //     })
+      //   })
+      // }, rate)
     }
   }
 }
